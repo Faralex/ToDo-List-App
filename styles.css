@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-size: 16px;
+  background-color: #bbb8b8;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+
+.form-elements {
+  display: flex;
+}
+
+.form-elements__input {
+  border-radius: 10px;
+  padding: 10px 20px 10px 10px;
+  margin-right: 10px;
+  width: 400px;
+  outline: none;
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.form-elements__input:focus {
+  border-color: #00796b;
+  border: 1px solid #119884;
+}
+
+.form-elements__btn {
+  width: 120px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #161515;
+  color: white;
+  transition: 0.5s;
+}
+
+.form-elements__btn:hover {
+  background-color: #fff;
+  color: black;
+}
+
+.task-list {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  list-style: none;
+}
+
+.task-list li {
+  background-color: #fff;
+  border-radius: 5px;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  font-size: 30px;
+}
+
+.task-list__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+}
+
+.task-list__item p {
+  word-break: break-word;
+}
+
+.task {
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
+
+.task-counter {
+  margin-left: 30px;
+  white-space: nowrap;
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.checkbox {
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transform: scale(1.5);
+}
+
+.completed {
+  color: green;
+  text-decoration: line-through;
+  transition: 0.5s;
+}
+
+.icons img {
+  cursor: pointer;
+  transition: transform 0.9s ease;
+}
+
+.icons img:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease;
+}
+
+.editTask,
+.deleteTask {
+  cursor: pointer;
+}
+.deleteTask {
+  margin-right: 20px;
+}
+
+.editTask:hover,
+.deleteTask:hover {
+  opacity: 0.8;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
