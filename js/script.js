@@ -72,9 +72,11 @@ function handleTaskAction(e) {
 
   if (e.target.classList.contains("editTask")) {
     input.value = todoService.startEditing(index);
+    updateAddButtonText();
     input.focus();
   } else if (e.target.classList.contains("deleteTask")) {
     todoService.deleteTask(index);
+    todoService.resetEditing();
     renderTasks();
   } else if (e.target.classList.contains("checkbox")) {
     todoService.toggleTaskComplete(index);
