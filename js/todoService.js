@@ -3,27 +3,26 @@ import { LocalStorageService } from "./localStorage.js";
 class TodoService {
   constructor() {
     this.localStorageService = new LocalStorageService();
-    this.tasks = this.localStorageService.loadTasks();
+    this.tasks = this.localStorageService.loadTasks() || [];
     this.isEditing = false;
     this.currentEditIndex = null;
   }
 
-  addTask(text, isEditing = false, currentEditIndex = null) {
-    if (!text && !isEditing) {
+  addTask(text) {
+    if (!text) {
       alert("Введите задачу");
       return;
     }
 
-    if (isEditing) {
-      this.tasks[currentEditIndex] = {
-        text: text,
-        completed: this.tasks[currentEditIndex].completed,
-      };
-      this.isEditing = false;
-      this.currentEditIndex = null;
-    } else {
-      this.tasks.push({ text: text, completed: false });
-    }
+    this.tasks.push({ text: text, completed: false });
+    this.saveTasks();
+  }
+
+  editTask(index, editedText) {
+    this.tasks[index] = {
+      ...this.tasks[index],
+      text: editedText,
+    };
 
     this.saveTasks();
   }
@@ -31,6 +30,7 @@ class TodoService {
   startEditing(index) {
     this.isEditing = true;
     this.currentEditIndex = index;
+
     return this.tasks[index].text;
   }
 

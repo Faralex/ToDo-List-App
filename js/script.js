@@ -1,22 +1,26 @@
 import TodoService from "./todoService.js";
 
-const input = document.getElementById("input-value");
-const addBtn = document.querySelector(".form-elements__btn");
-const taskList = document.querySelector(".task-list");
-const taskCounter = document.querySelector(".task-counter");
-const clearButton = document.querySelector(".form-elements__clearBtn");
+const DOM = {
+  input: document.getElementById("input-value"),
+  addBtn: document.querySelector(".form-elements__btn"),
+  taskList: document.querySelector(".task-list"),
+  taskCounter: document.querySelector(".task-counter"),
+  clearButton: document.querySelector(".form-elements__clearBtn"),
+};
 
 const todoService = new TodoService();
 
-addBtn.addEventListener("click", handleAddButtonClick);
-clearButton.addEventListener("click", handleClearButtonClick);
-taskList.addEventListener("click", handleTaskAction);
+DOM.addBtn.addEventListener("click", handleAddButtonClick);
+DOM.clearButton.addEventListener("click", handleClearButtonClick);
+DOM.taskList.addEventListener("click", handleTaskAction);
 
 function createTask(task, index) {
   const taskItemHTML = `
     <li class="task-list__item">
       <div class="task ${task.completed ? "completed" : ""}">
-        <input type="checkbox" class="checkbox" ${task.completed ? "checked" : ""}>
+        <input type="checkbox" class="checkbox" data-index="${index}" ${
+    task.completed ? "checked" : ""
+  }>
         <p>${task.text}</p>
       </div>
       <div class="icons">
@@ -29,36 +33,37 @@ function createTask(task, index) {
 }
 
 function renderTasks() {
-  taskList.innerHTML = "";
+  DOM.taskList.innerHTML = "";
 
   const tasks = todoService.getTasks();
-  taskList.innerHTML = tasks.map((task, index) => createTask(task, index)).join("");
+  DOM.taskList.innerHTML = tasks.map((task, index) => createTask(task, index)).join("");
 
   updateTaskCount();
   updateAddButtonText();
 }
 
 function updateTaskCount() {
-  taskCounter.textContent = `Добавлено задач: ${todoService.getTaskCount()}`;
+  DOM.taskCounter.textContent = `Добавлено задач: ${todoService.getTaskCount()}`;
 }
 
 function updateAddButtonText() {
-  addBtn.textContent = todoService.isEditing ? "Сохранить" : "Добавить задачу";
+  DOM.addBtn.textContent = todoService.isEditing ? "Сохранить" : "Добавить задачу";
 }
 
 function handleAddButtonClick(e) {
   e.preventDefault();
-  const text = input.value.trim();
-
-  todoService.addTask(text, todoService.isEditing, todoService.currentEditIndex);
+  const text = DOM.input.value.trim();
 
   if (todoService.isEditing) {
+    todoService.editTask(todoService.currentEditIndex, text);
     todoService.resetEditing();
+  } else {
+    todoService.addTask(text);
   }
 
-  input.value = "";
+  DOM.input.value = "";
   renderTasks();
-  input.focus();
+  DOM.input.focus();
 }
 
 function handleClearButtonClick(e) {
@@ -71,9 +76,9 @@ function handleTaskAction(e) {
   const index = e.target.getAttribute("data-index");
 
   if (e.target.classList.contains("editTask")) {
-    input.value = todoService.startEditing(index);
+    DOM.input.value = todoService.startEditing(index);
     updateAddButtonText();
-    input.focus();
+    DOM.input.focus();
   } else if (e.target.classList.contains("deleteTask")) {
     todoService.deleteTask(index);
     todoService.resetEditing();
